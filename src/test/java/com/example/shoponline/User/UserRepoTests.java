@@ -101,4 +101,14 @@ public class UserRepoTests {
 
         assertThat(userByEmail).isNotNull();
     }
+    @Test
+    public void testCountById()
+    {
+        Integer id = 1;
+        Long idCounted = userRepo.countById(id);
+
+        assertThat(idCounted).isNotNull().isGreaterThan(0);
+        System.out.println(idCounted);
+
+    }
 }

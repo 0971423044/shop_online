@@ -30,7 +30,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(User user) {
-        encodePass(user);
+        boolean isUpdatingUser =  (user.getId()!=null);
+        if(isUpdatingUser)
+        {
+            User existingUser = userRepo.findById(user.getId()).get();
+            if(user.getPassword().isEmpty())
+            {
+                user.setPassword(existingUser.getPassword());
+            }else {
+                encodePass(user);
+            }
+        }else {
+            encodePass(user);
+        }
         userRepo.save(user);
     }
 
@@ -71,5 +83,15 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException("Could not find any user with ID = " + id);
         }
 
+    }
+
+    @Override
+    public void deleteUser(Integer id) throws UserNotFoundException{
+        Long idCounted = userRepo.countById(id);
+        if(idCounted == null || idCounted == 0)
+        {
+            throw new UserNotFoundException("Could not find any user with ID = " + id);
+        }
+        userRepo.deleteById(id);
     }
 }

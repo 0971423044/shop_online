@@ -81,17 +81,49 @@
                         <a th:unless="${user.enabled==true}" class="fas fa-check-circle fa-2x icon icon-dark" th:href="@{/users/check_enabled}"></a>
                     </td>
                     <td>
-                        <a class="fas fa-edit fa-2x icon-green" th:href="@{'/users/edit/' +${user.id}}"></a>
+                        <a class="fas fa-edit fa-2x icon-green" title="Edit the user" th:href="@{'/users/edit/' +${user.id}}"></a>
                         &nbsp;&nbsp;&nbsp;
-                        <a class="fas fa-trash fa-2x icon-red" th:href="@{'/users/delete/' +${user.id}}"></a>
+                        <a class="fas fa-trash fa-2x icon-red link-delete" title="Delete the user"
+                           th:href="@{'/users/delete/' +${user.id}}" th:userId ="${user.id}"></a>
                     </td>
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="modal fade text-center" id="confirmDeleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Delete Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <span id="confirmText"></span>
+                </div>
+
+                <div class="modal-footer">
+                    <a class="btn btn-success" id="deleteButton" >Yes</a>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div align="center">
         <p>Arsenal Fan Club - Copyright &copy; Shopping</p>
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".link-delete").on("click", function (e) {
+            e.preventDefault();
+            userId = $(this).attr("userId");
+            $("#deleteButton").attr("href",$(this).attr("href"));
+            $("#confirmText").text("Are you want to delete the user with ID = " + userId + "?");
+            $("#confirmDeleteModal").modal();
+
+
+        })
+    })
+</script>
 </html>
