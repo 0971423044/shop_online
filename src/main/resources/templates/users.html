@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"/>
+    <title>Home Page - Shopping Admin</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div>
+        <nav class="navbar navbar-expand bg-light navbar-light">
+            <a class="navbar-brand" th:href="@{/}">
+                <img th:src="@{/image/ArsenalPanelSmall.png}"/>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="topNavBar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users}">User</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/categories}">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/brands}">Brands</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/products}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/customers}">Customers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/shipping}">Shipping</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div align="center">
+        <h2>Manage Users</h2>
+        &nbsp;
+        <button class="btn btn-primary" ><a class="text-decoration-none" style="color: white; " th:href="@{/users/new}">New User</a></button>
+        &nbsp;
+    </div>
+    <br/>
+    <div th:if="${message != null}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <div>
+        <table class="table table-responsive-xl table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th >User ID</th>
+                    <th >Photo</th>
+                    <th >Email</th>
+                    <th >First Name</th>
+                    <th >Last Name</th>
+                    <th >Roles</th>
+                    <th >Enabled</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user:${listUsers}">
+                    <td th:text="${user.id}">User ID</td>
+                    <td><span class="fas fa-portrait fa-3x icon-dark"></span></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.firstname}">First Name</td>
+                    <td th:text="${user.lastname}">Last Name</td>
+                    <td th:text="${user.roles}">Roles</td>
+                    <td>
+                        <a th:if="${user.enabled==true}" class="fas fa-check-circle fa-2x icon icon-green" th:href="@{/users/check_enabled}"></a>
+                        <a th:unless="${user.enabled==true}" class="fas fa-check-circle fa-2x icon icon-dark" th:href="@{/users/check_enabled}"></a>
+                    </td>
+                    <td>
+                        <a class="fas fa-edit fa-2x icon-green" th:href="@{'/users/edit/' +${user.id}}"></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a class="fas fa-trash fa-2x icon-red" th:href="@{'/users/delete/' +${user.id}}"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div align="center">
+        <p>Arsenal Fan Club - Copyright &copy; Shopping</p>
+    </div>
+</div>
+</body>
+</html>

@@ -107,4 +107,9 @@ public class User {
     {
         this.roles.add(role);
     }
+
+    @Override
+    public String toString() {
+        return "Users = [" + id + ", " + email + ", " + firstname + ", " + lastname + ", " + roles + "]";
+    }
 }
